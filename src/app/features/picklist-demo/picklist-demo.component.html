@@ -1,0 +1,32 @@
+<div class="d-flex flex-column align-items-center w-100 h-100 p-5">
+  <div class="d-flex align-items-center justify-content-between w-100">
+    <button *ngFor="let cat of categories" pButton pRipple
+    type="button" [label]="cat" (click)="onClickCategory(cat)"
+    class="p-button-raised p-button-secondary"></button>
+  </div>
+  <p-pickList [source]="sourceProducts" [target]="targetProducts"
+  [sourceHeader]="category" targetHeader="Selected" [dragdrop]="true"
+  [responsive]="true" filterBy="name" sourceFilterPlaceholder="Search by name"
+  targetFilterPlaceholder="Search by name" class="py-3"
+  [sourceStyle]="{'height':'30rem', 'width':'30rem'}"
+  [targetStyle]="{'height':'30rem', 'width':'30rem'}"
+  (onMoveToSource)="moveToSource($event)" (onMoveAllToSource)="moveAllToSource($event)">
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="image-container">
+          <img src="assets/showcase/images/demo/product/{{product.image}}" [alt]="product.name" class="product-image" />
+        </div>
+        <div class="product-list-detail">
+          <h5 class="p-mb-2">{{product.name}}</h5>
+          <i class="pi pi-tag product-category-icon"></i>
+          <span class="product-category">{{product.category}}</span>
+        </div>
+        <div class="product-list-action">
+          <h6 class="p-mb-2">${{product.price}}</h6>
+          <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+        </div>
+      </div>
+    </ng-template>
+  </p-pickList>
+</div>
+<p-toast key="picklistKey" position="top-right"></p-toast>
