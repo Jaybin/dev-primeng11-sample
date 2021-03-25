@@ -23,11 +23,21 @@ export class DropdownDemoComponent implements OnInit {
   categoryPlaceholder: string = DEFAULT_PLACEHOLDER;
   namePlaceholder: string = DEFAULT_PLACEHOLDER;
 
+  /**
+   * Creates an instance of DropdownDemoComponent
+   * 
+   * @param {ProductService} productSrv
+   * @memberof DropdownDemoComponent
+   */
   constructor(private productSrv: ProductService) {}
 
+  /**
+   * Angular's OnInit implementation
+   *
+   * @memberof DropdownDemoComponent
+   */
   ngOnInit() {
     this.productSrv.getProductsSmall().then(data => this.products = data);
-
     this.inventoryStatuses = [
       { label: 'In Stock', value: 'INSTOCK' },
       { label: 'Low Stock', value: 'LOWSTOCK' },
@@ -35,6 +45,11 @@ export class DropdownDemoComponent implements OnInit {
     ];
   }
 
+  /**
+   * Generates unique product categories based on the selected inventory status
+   *
+   * @memberof DropdownDemoComponent
+   */
   generateCategories() {
     this.category = this.name = this.product = null;
     this.names = [];
@@ -44,6 +59,11 @@ export class DropdownDemoComponent implements OnInit {
     this.categoryPlaceholder = CATEGORY_PLACEHOLDER;
   }
 
+  /**
+   * Generates product names based on the selected inventory status and category
+   *
+   * @memberof DropdownDemoComponent
+   */
   generateNames() {
     this.name = this.product = null;
     const names = this.products.filter(product => product.inventoryStatus === this.inventoryStatus && product.category === this.category)
@@ -52,6 +72,11 @@ export class DropdownDemoComponent implements OnInit {
     this.namePlaceholder = NAME_PLACEHOLDER;
   }
 
+  /**
+   * Identifies the product from the original list of products based on the selected inventory status, category and name 
+   *
+   * @memberof DropdownDemoComponent
+   */
   identifyProduct() {
     this.product = this.products.find(product => product.name === this.name);
   }

@@ -53,8 +53,20 @@ export class ProductService {
     "Yoga Set",
   ];
 
-  constructor(private http: HttpClient) { }
+  /**
+   * Creates an instance of ProductService
+   * 
+   * @param {HttpClient} http
+   * @memberof ProductService
+   */
+  constructor(private http: HttpClient) {}
 
+  /**
+   * Returns a list of products
+   *
+   * @return {*} 
+   * @memberof ProductService
+   */
   getProductsSmall() {
     return this.http.get<any>('assets/products-small.json')
     .toPromise()
@@ -62,62 +74,64 @@ export class ProductService {
     .then(data => { return data; });
   }
 
-  getProducts() {
-    return this.http.get<any>('assets/products.json')
-    .toPromise()
-    .then(res => <IProduct[]>res.data)
-    .then(data => { return data; });
-  }
+  // For future use
 
-  getProductsWithOrdersSmall() {
-    return this.http.get<any>('assets/products-orders-small.json')
-    .toPromise()
-    .then(res => <IProduct[]>res.data)
-    .then(data => { return data; });
-  }
+  // getProducts() {
+  //   return this.http.get<any>('assets/products.json')
+  //   .toPromise()
+  //   .then(res => <IProduct[]>res.data)
+  //   .then(data => { return data; });
+  // }
 
-  generatePrduct(): IProduct {
-    const product: IProduct =  {
-      id: this.generateId(),
-      name: this.generateName(),
-      description: "Product Description",
-      price: this.generatePrice(),
-      quantity: this.generateQuantity(),
-      category: "Product Category",
-      inventoryStatus: this.generateStatus(),
-      rating: this.generateRating()
-    };
+  // getProductsWithOrdersSmall() {
+  //   return this.http.get<any>('assets/products-orders-small.json')
+  //   .toPromise()
+  //   .then(res => <IProduct[]>res.data)
+  //   .then(data => { return data; });
+  // }
 
-    product.image = product.name.toLocaleLowerCase().split(/[ ,]+/).join('-')+".jpg";;
-    return product;
-  }
+  // generatePrduct(): IProduct {
+  //   const product: IProduct =  {
+  //     id: this.generateId(),
+  //     name: this.generateName(),
+  //     description: "Product Description",
+  //     price: this.generatePrice(),
+  //     quantity: this.generateQuantity(),
+  //     category: "Product Category",
+  //     inventoryStatus: this.generateStatus(),
+  //     rating: this.generateRating()
+  //   };
 
-  generateId() {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < 5; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }  
-    return text;
-  }
+  //   product.image = product.name.toLocaleLowerCase().split(/[ ,]+/).join('-')+".jpg";;
+  //   return product;
+  // }
 
-  generateName() {
-    return this.productNames[Math.floor(Math.random() * Math.floor(30))];
-  }
+  // generateId() {
+  //   let text = "";
+  //   let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  //   for (var i = 0; i < 5; i++) {
+  //     text += possible.charAt(Math.floor(Math.random() * possible.length));
+  //   }  
+  //   return text;
+  // }
 
-  generatePrice() {
-    return Math.floor(Math.random() * Math.floor(299)+1);
-  }
+  // generateName() {
+  //   return this.productNames[Math.floor(Math.random() * Math.floor(30))];
+  // }
 
-  generateQuantity() {
-    return Math.floor(Math.random() * Math.floor(75)+1);
-  }
+  // generatePrice() {
+  //   return Math.floor(Math.random() * Math.floor(299)+1);
+  // }
 
-  generateStatus() {
-    return this.status[Math.floor(Math.random() * Math.floor(3))];
-  }
+  // generateQuantity() {
+  //   return Math.floor(Math.random() * Math.floor(75)+1);
+  // }
 
-  generateRating() {
-    return Math.floor(Math.random() * Math.floor(5)+1);
-  }
+  // generateStatus() {
+  //   return this.status[Math.floor(Math.random() * Math.floor(3))];
+  // }
+
+  // generateRating() {
+  //   return Math.floor(Math.random() * Math.floor(5)+1);
+  // }
 }

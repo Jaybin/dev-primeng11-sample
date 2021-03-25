@@ -8,9 +8,26 @@ import { IProduct, ProductService } from '../../shared/services/product.service'
   styleUrls: ['./picklist-demo.component.scss']
 })
 export class PicklistDemoComponent implements OnInit {
+  category: string;
+  categories: string[] = [];
+  allProducts: IProduct[];
+  sourceProducts: IProduct[];
+  targetProducts: IProduct[];
 
+  /**
+   * Creates an instance of PicklistDemoComponent
+   * 
+   * @param {ProductService} productSrv
+   * @param {MessageService} messageSrv
+   * @memberof PicklistDemoComponent
+   */
   constructor(private productSrv: ProductService, private messageSrv: MessageService) {}
 
+  /**
+   * Angular's OnInit implementation
+   *
+   * @memberof PicklistDemoComponent
+   */
   ngOnInit(): void {
     this.productSrv.getProductsSmall()
     .then(products => {
@@ -25,16 +42,12 @@ export class PicklistDemoComponent implements OnInit {
     this.targetProducts = [];
   }
 
-  category: string;
-
-  categories: string[] = [];
-
-  allProducts: IProduct[];
-
-  sourceProducts: IProduct[];
-    
-  targetProducts: IProduct[];
-
+  /**
+   * Click listener for each category
+   *
+   * @param {string} category
+   * @memberof PicklistDemoComponent
+   */
   onClickCategory(category: string) {
     this.category = category;
     this.sourceProducts =
@@ -44,14 +57,33 @@ export class PicklistDemoComponent implements OnInit {
     });
   }
 
+  /**
+   * Move item to source list
+   *
+   * @param {*} e
+   * @memberof PicklistDemoComponent
+   */
   moveToSource(e: any) {
     this.checkValidMove(e.items);
   }
 
+  /**
+   * Move all items to source list
+   *
+   * @param {*} e
+   * @memberof PicklistDemoComponent
+   */
   moveAllToSource(e: any) {
     this.checkValidMove(e.items);
   }
 
+  /**
+   * Validate the move from destination list to soure list
+   *
+   * @private
+   * @param {IProduct[]} items
+   * @memberof PicklistDemoComponent
+   */
   private checkValidMove(items: IProduct[]) {
     const invalidItems: IProduct[] =
     items.filter(item => item.category !== this.category);
@@ -62,9 +94,7 @@ export class PicklistDemoComponent implements OnInit {
     if (invalidItems.length) {
       const str = `Cannot push ${invalidItemIds.join()} since they belong to a different category.`
       this.messageSrv.add(
-        {
-          key: 'picklistKey', severity:'error', summary: 'Error', detail: str
-        }
+        { key: 'picklistKey', severity:'error', summary: 'Error', detail: str }
       );
     }
   }

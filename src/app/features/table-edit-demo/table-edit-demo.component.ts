@@ -13,11 +13,22 @@ export class TableEditDemoComponent {
   statuses: SelectItem[];
   clonedProducts: { [s: string]: IProduct; } = {};
 
+  /**
+   * Creates an instance of TableEditDemoComponent
+   * 
+   * @param {ProductService} productSrv
+   * @param {MessageService} messageService
+   * @memberof TableEditDemoComponent
+   */
   constructor(private productSrv: ProductService, private messageService: MessageService) {}
 
+  /**
+   * Angular's OnInit implementation
+   *
+   * @memberof TableEditDemoComponent
+   */
   ngOnInit() {
     this.productSrv.getProductsSmall().then(data => this.products = data);
-
     this.statuses = [
       { label: 'In Stock', value: 'INSTOCK' },
       { label: 'Low Stock', value: 'LOWSTOCK' },
@@ -25,10 +36,23 @@ export class TableEditDemoComponent {
     ];
   }
 
+  /**
+   * Creates a clone of the row when row edit is initialised
+   *
+   * @param {IProduct} product
+   * @memberof TableEditDemoComponent
+   */
   onRowEditInit(product: IProduct) {
     this.clonedProducts[product.id] = { ...product };
   }
 
+  /**
+   * Saves the row when row edit is finished and saved
+   *
+   * @param {IProduct} product
+   * @return {*} 
+   * @memberof TableEditDemoComponent
+   */
   onRowEditSave(product: IProduct) {
     if (this.isProductInvalid(product)) return; // Code and Name are compulsory
     if (this.isProductEdited(product)) {
@@ -39,18 +63,37 @@ export class TableEditDemoComponent {
     else this.messageService.add({severity:'error', summary: 'Error', detail:'Invalid Price'});
   }
 
+  /**
+   * Cancels the row edit operation and assigns the cloned copy of product to the index position
+   *
+   * @param {IProduct} product
+   * @param {number} index
+   * @memberof TableEditDemoComponent
+   */
   onRowEditCancel(product: IProduct, index: number) {
     this.products[index] = this.clonedProducts[product.id];
     delete this.products[product.id];
   }
 
-  isProductInvalid(product: IProduct) {
+  /**
+   * Checks validation of name and price field
+   *
+   * @param {IProduct} product
+   * @return {boolean}
+   * @memberof TableEditDemoComponent
+   */
+  isProductInvalid(product: IProduct): boolean {
     return product.name.trim() === '' || product.price.toString().trim() === '';
   }
 
-  isProductEdited(product: IProduct) {
-    console.log(JSON.stringify(product));
-    console.log(JSON.stringify(this.clonedProducts[product.id]));
+  /**
+   * Identifies whether the product was actually edited
+   *
+   * @param {IProduct} product
+   * @return {boolean}
+   * @memberof TableEditDemoComponent
+   */
+  isProductEdited(product: IProduct): boolean {
     return JSON.stringify(product) !== JSON.stringify(this.clonedProducts[product.id]);
   }
 }
