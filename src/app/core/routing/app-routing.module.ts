@@ -20,6 +20,10 @@ const appRoutes: Routes = [
   {
     path: 'dropdown', loadChildren: () => import('src/app/features/dropdown-demo/dropdown-demo.module')
     .then(m => m.DropdownDemoModule)
+  },
+  {
+    path: 'counter', loadChildren: () => import('src/app/features/counter/counter.module')
+    .then(m => m.CounterModule)
   }
 ];
 

@@ -5,6 +5,8 @@ import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './features/counter/state/counter.reducer';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({ counter: counterReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

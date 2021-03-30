@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center justify-content-center my-3">
+  <input type="text" placeholder="enter value" [(ngModel)]="value"/>
+  <button class="btn btn-primary" (click)="onAdd()">Add to counter</button>
+</div>
+
+<div class="d-flex align-items-center justify-content-center my-3">
+  <div class="mx-3">{{ name$ | async }}</div>
+  <button class="btn btn-secondary" (click)="onChangeName()">Change Name</button>
+</div>
